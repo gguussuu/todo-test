@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { CheckIcon, TrashIcon } from "@heroicons/react/24/outline";
 import TodoItem from "./TodoItem";
 
 interface todo {
@@ -27,14 +26,16 @@ const TodoList = () => {
     setTodo("");
   };
 
-  const toggleCompleted = useCallback((todoId: number) => {
-    console.log(todoId, todoList);
-    setTodoList(
-      todoList.map((task) =>
-        task.id === todoId ? { ...task, completed: !task.completed } : task
-      )
-    );
-  },[todoList]);
+  const toggleCompleted = useCallback(
+    (todoId: number) => {
+      setTodoList(
+        todoList.map((task) =>
+          task.id === todoId ? { ...task, completed: !task.completed } : task
+        )
+      );
+    },
+    [todoList]
+  );
   const DeleteTodo = (todoId: number) => {
     setTodoList(todoList.filter((el) => el.id !== todoId));
   };
@@ -58,12 +59,12 @@ const TodoList = () => {
         </button>
       </div>
       <ul className="mt-10 flex flex-col gap-y-4">
-        {todoList.map((el) => (
+        {todoList.map(({ id, todo, completed }) => (
           <TodoItem
-            key={el.todo}
-            id={el.id}
-            todo={el.todo}
-            completed={el.completed}
+            key={todo}
+            id={id}
+            todo={todo}
+            completed={completed}
             DeleteTodo={DeleteTodo}
             toggleCompleted={toggleCompleted}
           />

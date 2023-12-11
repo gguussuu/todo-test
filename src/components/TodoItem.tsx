@@ -17,19 +17,14 @@ const TodoItem = ({
 }: ITodoItemProps) => {
   return (
     <li className="flex">
-      <input
-        id="completed"
-        type="checkbox"
-        className="hidden peer"
-        checked={completed}
-        onChange={() => toggleCompleted(id)}
-      />
-      <label
-        htmlFor="completed"
-        className="w-6 h-6 rounded-full border border-gray-400 inline-flex items-center justify-center peer-checked:border-blue-500 text-white peer-checked:text-blue-500"
+      <div
+        onClick={() => toggleCompleted(id)}
+        className={`w-6 h-6 rounded-full border cursor-pointer inline-flex justify-center items-center bg-white ${
+          completed ? "border-blue-500 text-blue-500" : "border-gray-400"
+        }`}
       >
-        <CheckIcon className="w-5" />
-      </label>
+        {completed && <CheckIcon className="w-5" />}
+      </div>
       <span className="ml-3 peer-checked:line-through">{todo}</span>
       <div
         className="ml-5 text-gray-400 cursor-pointer"
