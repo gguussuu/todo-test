@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import TodoItem from "./TodoItem";
+import Filter from "./Filter";
 
 interface todo {
   id: number;
@@ -14,6 +15,8 @@ const TodoList = () => {
     { id: 3, todo: "Task 3", completed: false },
   ]);
   const [todo, setTodo] = useState("");
+  const [filterComplete, setFilterComplete] = useState(true);
+  const [filterIncomplete, setFilterIncomplete] = useState(true);
   const AddTodo = () => {
     setTodoList([
       ...todoList,
@@ -39,6 +42,22 @@ const TodoList = () => {
   const DeleteTodo = (todoId: number) => {
     setTodoList(todoList.filter((el) => el.id !== todoId));
   };
+  const filterTodoList = useMemo(() => {
+    return filterComplete && filterIncomplete
+      ? todoList
+      : filterComplete
+      ? todoList.filter((el) => el.completed === true)
+      : todoList.filter((el) => el.completed === false);
+  }, [filterComplete, filterIncomplete, todoList]);
+
+  const onFilterHandler = useCallback(() => {
+    if (filterComplete && filterIncomplete) {
+      setFilterComplete(false);
+      setFilterIncomplete(false);
+    }
+    setFilterComplete(!filterComplete);
+    setFilterIncomplete(!filterIncomplete);
+  }, [filterComplete, filterIncomplete]);
 
   return (
     <main className="w-full">
@@ -58,8 +77,15 @@ const TodoList = () => {
           추가
         </button>
       </div>
+      <Filter
+        filterComplete={filterComplete}
+        filterIncomplete={filterIncomplete}
+        onFilterHandler={onFilterHandler}
+        setFilterComplete={setFilterComplete}
+        setFilterIncomplete={setFilterIncomplete}
+      />
       <ul className="mt-10 flex flex-col gap-y-4">
-        {todoList.map(({ id, todo, completed }) => (
+        {filterTodoList.map(({ id, todo, completed }) => (
           <TodoItem
             key={todo}
             id={id}
