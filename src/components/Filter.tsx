@@ -21,6 +21,7 @@ const Filter = ({
           id="all"
           checked={filterComplete && filterIncomplete}
           onChange={onFilterHandler}
+          className="h-4 w-4 rounded border-gray-300 text-blue-500 focus:ring-blue-500"
         />
         <label htmlFor="all">모두</label>
       </div>
@@ -30,6 +31,7 @@ const Filter = ({
           id="unComplete"
           checked={filterComplete}
           onChange={() => setFilterComplete(!filterComplete)}
+          className="h-4 w-4 rounded border-gray-300 text-blue-500 focus:ring-blue-500"
         />
         <label htmlFor="unComplete">완료</label>
       </div>
@@ -39,6 +41,7 @@ const Filter = ({
           id="complete"
           checked={filterIncomplete}
           onChange={() => setFilterIncomplete(!filterIncomplete)}
+          className="h-4 w-4 rounded border-gray-300 text-blue-500 focus:ring-blue-500"
         />
         <label htmlFor="complete">미완료</label>
       </div>
